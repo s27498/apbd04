@@ -6,15 +6,7 @@ namespace LegacyApp
     {
         public bool AddUser(string firstName, string lastName, string email, DateTime dateOfBirth, int clientId)
         {
-            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
-            {
-                return false;
-            }
-
-            if (!email.Contains("@") && !email.Contains("."))
-            {
-                return false;
-            }
+            if (!doesNameExist(firstName, lastName)) return false;
 
             var now = DateTime.Now;
             int age = now.Year - dateOfBirth.Year;
@@ -64,8 +56,17 @@ namespace LegacyApp
             {
                 return false;
             }
+            
 
             UserDataAccess.AddUser(user);
+            return true;
+        }
+        private bool doesNameExist(string firstName, string lastName)
+        {
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                return false;
+            }
             return true;
         }
     }
